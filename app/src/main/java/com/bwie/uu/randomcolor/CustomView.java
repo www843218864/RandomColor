@@ -36,6 +36,13 @@ public class CustomView extends View {
     public CustomView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        init(attrs);
+
+
+
+    }
+
+    private void init(AttributeSet attrs) {
         a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.CustomView, 0, 0);
         int indexCount = a.getIndexCount();
         for (int i = 0; i < indexCount; i++) {
@@ -63,11 +70,11 @@ public class CustomView extends View {
         a.recycle();
 
         paint = new Paint();
-        paint.setTextSize(size);
+
         paint.setAntiAlias(true);
 
         rect = new Rect();
-        paint.getTextBounds(text,0,text.length(), rect);
+
 
 
         startUpdata();
@@ -75,6 +82,7 @@ public class CustomView extends View {
         this.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if(isStart){
                     isStart=false;
 
@@ -84,9 +92,6 @@ public class CustomView extends View {
                 }
             }
         });
-
-
-
     }
 
     private void startUpdata() {
@@ -98,7 +103,6 @@ public class CustomView extends View {
                     text=randColorCode;
                     color = Color.parseColor(randColorCode);
                     postInvalidate();
-                    Log.e("CCCCCCCCCc",randColorCode);
                     try {
                         Thread.sleep(3000L);
                     } catch (InterruptedException e) {
@@ -114,6 +118,7 @@ public class CustomView extends View {
 
     public CustomView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        init(attrs);
     }
 
     @Override
@@ -128,14 +133,13 @@ public class CustomView extends View {
 
         paint.setColor(color);
         canvas.drawRect(0,0,getMeasuredWidth(),getMeasuredHeight(),paint);
+        paint.setTextSize(size);
+        paint.getTextBounds(text,0,text.length(), rect);
         paint.setColor(textcolor);
         canvas.drawText(text,getMeasuredWidth()/2-rect.width()/2,getMeasuredHeight()/2+rect.height()/2,paint);
-        Log.e("aaaaa",(getMeasuredWidth()/2)+"  "+(getMeasuredHeight()/2));
-        Log.e("aaaaa",(rect.width()/2)+"  "+(rect.height()/2));
-        Log.e("aaaaa",(getMeasuredWidth()/2-rect.width()/2)+"  "+(getMeasuredHeight()/2-rect.height()/2));
     }
 
-    public static String getRandColorCode(){
+    public  String getRandColorCode(){
         String r,g,b;
         Random random = new Random();
         r = Integer.toHexString(random.nextInt(256)).toUpperCase();
